@@ -13,5 +13,4 @@ public class SpringitApplication {
     SpringApplication.run(SpringitApplication.class, args);
   }
 
-
 }
