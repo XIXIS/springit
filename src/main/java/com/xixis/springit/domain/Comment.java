@@ -1,8 +1,6 @@
 package com.xixis.springit.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-@Data
+@RequiredArgsConstructor
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 public class Comment extends Auditable{
 
@@ -19,10 +20,11 @@ public class Comment extends Auditable{
   private Long id;
 
   @NonNull
-  private String comment;
+  private String body;
 
   //Link
   @ManyToOne
+  @NonNull
   private Link link;
 
 }
