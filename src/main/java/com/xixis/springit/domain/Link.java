@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
 @Data
-public class Link {
+@NoArgsConstructor
+public class Link extends Auditable{
 
   @Id
   @GeneratedValue
