@@ -15,13 +15,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class SpringitApplication {
 
-//  private static final Logger log = LoggerFactory.getLogger(SpringitApplication.class);
+  // private static final Logger log = LoggerFactory.getLogger(SpringitApplication.class);
 
   public static void main(String[] args) {
     SpringApplication.run(SpringitApplication.class, args);
   }
 
-  //@Bean
+  // @Bean
   CommandLineRunner runner(LinkRepository linkRepository, CommentRepository commentRepository){
 
     return args -> {
@@ -37,10 +37,10 @@ public class SpringitApplication {
       System.out.println("====================================================");
 
 
-//      Link firstLink = linkRepository.findByTitle("Getting Started with Spring Boot 2");
-//      System.out.println("Getting Inserted Link ==> ");
-//      System.out.println(firstLink.getTitle());
-//      System.out.println("====================================================");
+      // Link firstLink = linkRepository.findByTitle("Getting Started with Spring Boot 2");
+      // System.out.println("Getting Inserted Link ==> ");
+      // System.out.println(firstLink.getTitle());
+      // System.out.println("====================================================");
 
     };
 
