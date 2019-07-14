@@ -2,7 +2,7 @@ package com.xixis.springit.controller;
 
 import com.xixis.springit.domain.Link;
 import com.xixis.springit.repository.LinkRepository;
-import com.xixis.springit.APIResponse;
+import com.xixis.springit.domain.APIResponse;
 import com.xixis.springit.validators.LinkValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

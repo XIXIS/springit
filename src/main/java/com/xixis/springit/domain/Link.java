@@ -1,5 +1,6 @@
 package com.xixis.springit.domain;
 
+import com.xixis.springit.config.Auditable;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
@@ -17,7 +18,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Link extends Auditable{
+public class Link extends Auditable {
 
   @Id
   @GeneratedValue

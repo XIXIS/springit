@@ -1,12 +1,12 @@
 package com.xixis.springit.domain;
 
-import com.xixis.springit.config.Auditable;
 import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import java.util.Collection;
 
 @Entity
 @RequiredArgsConstructor
@@ -14,18 +14,16 @@ import javax.persistence.ManyToOne;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Comment extends Auditable {
+public class Role {
 
   @Id
   @GeneratedValue
-  private Long id;
+  private Long Id;
 
   @NonNull
-  private String body;
+  private String name;
 
-  //Link
-  @ManyToOne
-  @NonNull
-  private Link link;
+  @ManyToMany( mappedBy = "roles")
+  private Collection<User> users;
 
 }

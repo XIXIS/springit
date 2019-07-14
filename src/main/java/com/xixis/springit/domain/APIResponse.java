@@ -1,4 +1,4 @@
-package com.xixis.springit;
+package com.xixis.springit.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.xixis.springit.domain.Link;

@@ -1,4 +1,4 @@
-package com.xixis.springit.domain;
+package com.xixis.springit.config;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,9 +26,7 @@ public abstract class Auditable {
   @LastModifiedDate
   private LocalDateTime lastModifiedDate;
 
-  public String getCreatedBy() {
-    return createdBy;
-  }
+  public String getCreatedBy() { return createdBy; }
 
   public void setCreatedBy(String createdBy) {
     this.createdBy = createdBy;
