@@ -1,5 +1,6 @@
 package com.xixis.springit.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xixis.springit.config.Auditable;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
@@ -35,10 +36,19 @@ public class Link extends Auditable {
 
   // comment
   @OneToMany(mappedBy = "link")
+  @JsonIgnore
   private List<Comment> comments = new ArrayList<>();
+
+  @OneToMany(mappedBy = "link")
+  @JsonIgnore
+  private List<Vote> votes = new ArrayList<>();
+
+  private int voteCount = 0;
 
   public void addComment(Comment comment){
     comments.add(comment);
   }
+
+
 
 }

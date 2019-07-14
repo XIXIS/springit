@@ -69,7 +69,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         //public routes
         .authorizeRequests()
         .requestMatchers(EndpointRequest.to("info")).permitAll()
-        .antMatchers("/auth/*", "/home").permitAll()
+        .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
+        .antMatchers("/auth/*", "/home", "/").permitAll()
         .antMatchers("/actuator/").hasRole("ADMIN")
         .antMatchers("/h2", "/h2/**").permitAll()
         // all other requests need to be authenticated

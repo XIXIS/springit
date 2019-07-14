@@ -1,5 +1,6 @@
 package com.xixis.springit.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -18,12 +19,14 @@ public class Role {
 
   @Id
   @GeneratedValue
-  private Long Id;
+  private Long id;
 
   @NonNull
   private String name;
 
   @ManyToMany( mappedBy = "roles")
+  @JsonIgnore
   private Collection<User> users;
+
 
 }

@@ -1,6 +1,7 @@
 package com.xixis.springit.controller;
 
 import com.xixis.springit.domain.Link;
+import com.xixis.springit.domain.LinkAPIResponse;
 import com.xixis.springit.repository.LinkRepository;
 import com.xixis.springit.domain.APIResponse;
 import com.xixis.springit.validators.LinkValidator;
@@ -47,7 +48,7 @@ public class LinkController {
 
     Link newLink = linkRepository.save(link);
     return new ResponseEntity<>(
-        new APIResponse(newLink, "Link created successfully"),
+        new LinkAPIResponse(newLink, "Link created successfully"),
         HttpStatus.OK
     );
 
@@ -62,14 +63,14 @@ public class LinkController {
 
     if (link.isPresent()) {
       return new ResponseEntity<>(
-          new APIResponse(link.get(), "Link was found"),
+          new LinkAPIResponse(link.get(), "Link was found"),
           HttpStatus.OK
       );
     }
 
     String error = "Link with Id " + linkId + " does not exist";
     return new ResponseEntity<>(
-        new APIResponse(error, "Error finding Link!"),
+        new LinkAPIResponse(error, "Error finding Link!"),
         HttpStatus.NOT_FOUND
     );
 
@@ -89,7 +90,7 @@ public class LinkController {
         String error = linkValidator.validateCreateEditLink();
 
         return new ResponseEntity<>(
-            new APIResponse(error, "Validation Failed!"),
+            new LinkAPIResponse(error, "Validation Failed!"),
             HttpStatus.UNPROCESSABLE_ENTITY
         );
 
@@ -101,7 +102,7 @@ public class LinkController {
 
         Link updatedLink = linkRepository.save(existingLink);
         return new ResponseEntity<>(
-            new APIResponse(updatedLink, "Link with Id "+linkId+ " was updated successfully"),
+            new LinkAPIResponse(updatedLink, "Link with Id "+linkId+ " was updated successfully"),
             HttpStatus.OK
         );
       }
@@ -124,13 +125,13 @@ public class LinkController {
 
       linkRepository.deleteById(linkId);
       return new ResponseEntity<>(
-          new APIResponse("Successfully deleted link with Id " + linkId),
+          new LinkAPIResponse("Successfully deleted link with Id " + linkId),
           HttpStatus.OK
       );
 
     } catch (Exception ex) {
       return new ResponseEntity<>(
-          new APIResponse(
+          new LinkAPIResponse(
               "Link with Id " + linkId + " does not exist",
               "Deletion Failed."
           ),
