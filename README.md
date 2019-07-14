@@ -1,7 +1,7 @@
 Springit
 ===
 
-A Sprint Boot 2 tutorial project. The project covers building a Reddit Clone using Spring Boot 2 and Spring Framework 5
+A Sprint Boot 2 REST API tutorial project. The project covers building a Reddit Clone REST API using Spring Boot 2 and Spring Framework 5
 
 ## Built With
 
