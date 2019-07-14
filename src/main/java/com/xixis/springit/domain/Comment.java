@@ -1,5 +1,6 @@
 package com.xixis.springit.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.xixis.springit.config.Auditable;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Comment extends Auditable {
   //Link
   @ManyToOne
   @NonNull
+  @JsonBackReference
   private Link link;
 
 }

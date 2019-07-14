@@ -1,5 +1,6 @@
 package com.xixis.springit.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,6 +42,7 @@ public class User implements UserDetails {
       joinColumns = @JoinColumn( name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn( name = "role_id", referencedColumnName = "id")
   )
+  @JsonManagedReference
   private Set<Role> roles = new HashSet<>();
 
   public void addRole(Role role){

@@ -1,5 +1,6 @@
 package com.xixis.springit.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -25,7 +26,7 @@ public class Role {
   private String name;
 
   @ManyToMany( mappedBy = "roles")
-  @JsonIgnore
+  @JsonBackReference
   private Collection<User> users;
 
 
