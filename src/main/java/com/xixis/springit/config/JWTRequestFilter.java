@@ -3,7 +3,7 @@ package com.xixis.springit.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xixis.springit.domain.JWTResponse;
-import com.xixis.springit.service.UserDetailsServiceImpl;
+import com.xixis.springit.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,11 +23,11 @@ import io.jsonwebtoken.security.SignatureException;
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-  private UserDetailsServiceImpl userDetailsServiceImpl;
+  private UserService userService;
   private JWTTokenUtil jWTTokenUtil;
 
-  public JWTRequestFilter(UserDetailsServiceImpl userDetailsServiceImpl, JWTTokenUtil jWTTokenUtil) {
-    this.userDetailsServiceImpl = userDetailsServiceImpl;
+  public JWTRequestFilter(UserService userService, JWTTokenUtil jWTTokenUtil) {
+    this.userService = userService;
     this.jWTTokenUtil = jWTTokenUtil;
   }
 
@@ -109,7 +109,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     // Once we get the token validate it.
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-      UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
+      UserDetails userDetails = userService.loadUserByUsername(username);
 
       // if token is valid configure Spring Security to manually set
       // authentication

@@ -3,7 +3,7 @@ package com.xixis.springit.controller;
 import com.xixis.springit.config.JWTTokenUtil;
 import com.xixis.springit.domain.JWTRequest;
 import com.xixis.springit.domain.JWTResponse;
-import com.xixis.springit.service.UserDetailsServiceImpl;
+import com.xixis.springit.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-public class JWTAuthenticationController {
+public class JWTAuthController {
 
   private AuthenticationManager authenticationManager;
   private JWTTokenUtil jWTTokenUtil;
-  private UserDetailsServiceImpl userDetailsServiceImpl;
+  private UserService userService;
 
-  public JWTAuthenticationController(AuthenticationManager authenticationManager,
-                                     JWTTokenUtil jWTTokenUtil,
-                                     UserDetailsServiceImpl userDetailsServiceImpl){
+  public JWTAuthController(AuthenticationManager authenticationManager,
+                           JWTTokenUtil jWTTokenUtil,
+                           UserService userService){
     this.authenticationManager = authenticationManager;
     this.jWTTokenUtil = jWTTokenUtil;
-    this.userDetailsServiceImpl = userDetailsServiceImpl;
+    this.userService = userService;
   }
 
   @RequestMapping(value = "/auth/login", method = RequestMethod.POST)
@@ -41,7 +41,7 @@ public class JWTAuthenticationController {
     try {
 
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-      final UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(jWTRequest.getUsername());
+      final UserDetails userDetails = userService.loadUserByUsername(jWTRequest.getUsername());
       final String token = jWTTokenUtil.generateToken(userDetails);
       return ResponseEntity.ok(new JWTResponse(token, "Login successful", ""));
 

@@ -2,7 +2,7 @@ package com.xixis.springit.security;
 
 import com.xixis.springit.config.JWTAuthenticationEntryPoint;
 import com.xixis.springit.config.JWTRequestFilter;
-import com.xixis.springit.service.UserDetailsServiceImpl;
+import com.xixis.springit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
@@ -26,14 +26,14 @@ import static org.hibernate.criterion.Restrictions.and;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private JWTAuthenticationEntryPoint jWTAuthenticationEntryPoint;
-  private UserDetailsServiceImpl userDetailsServiceImpl;
+  private UserService userService;
   private JWTRequestFilter jWTRequestFilter;
 
   public SecurityConfiguration(JWTAuthenticationEntryPoint jWTAuthenticationEntryPoint,
-                               UserDetailsServiceImpl userDetailsServiceImpl,
+                               UserService userService,
                                JWTRequestFilter jWTRequestFilter) {
     this.jWTAuthenticationEntryPoint = jWTAuthenticationEntryPoint;
-    this.userDetailsServiceImpl = userDetailsServiceImpl;
+    this.userService = userService;
     this.jWTRequestFilter = jWTRequestFilter;
   }
 
@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // configure AuthenticationManager so that it knows from where to load
     // user for matching credentials
     // Use BCryptPasswordEncoder
-    auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+    auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
 
   }
 

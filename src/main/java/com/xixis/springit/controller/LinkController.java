@@ -4,6 +4,7 @@ import com.xixis.springit.domain.Link;
 import com.xixis.springit.domain.LinkAPIResponse;
 import com.xixis.springit.repository.LinkRepository;
 import com.xixis.springit.domain.APIResponse;
+import com.xixis.springit.service.LinkService;
 import com.xixis.springit.validators.LinkValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,17 +20,17 @@ import java.util.Optional;
 @RequestMapping(value = "/links", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class LinkController {
 
-  private LinkRepository linkRepository;
+  private LinkService linkService;
 
-  public LinkController(LinkRepository linkRepository) {
-    this.linkRepository = linkRepository;
+  public LinkController(LinkService linkService) {
+    this.linkService = linkService;
   }
 
   // list
 
   @GetMapping("/")
   public List<Link> list() {
-    return linkRepository.findAll();
+    return linkService.findAll();
   }
 
   // CRUD
@@ -46,7 +47,7 @@ public class LinkController {
       );
     }
 
-    Link newLink = linkRepository.save(link);
+    Link newLink = linkService.createLink(link);
     return new ResponseEntity<>(
         new LinkAPIResponse(newLink, "Link created successfully"),
         HttpStatus.OK
@@ -59,7 +60,7 @@ public class LinkController {
   @GetMapping("/{linkId}")
   public ResponseEntity<?> read(@PathVariable Long linkId) {
 
-    Optional<Link> link = linkRepository.findById(linkId);
+    Optional<Link> link = linkService.findLink(linkId);
 
     if (link.isPresent()) {
       return new ResponseEntity<>(
@@ -80,7 +81,7 @@ public class LinkController {
   @PutMapping("/{linkId}")
   public ResponseEntity<?> update(@PathVariable Long linkId, @Valid @RequestBody Link link, BindingResult bindingResult) {
 
-    Optional<Link> optionalLink = linkRepository.findById(linkId);
+    Optional<Link> optionalLink = linkService.findLink(linkId);
 
     if (optionalLink.isPresent()) {
 
@@ -94,13 +95,13 @@ public class LinkController {
             HttpStatus.UNPROCESSABLE_ENTITY
         );
 
-      }else {
+      } else {
 
         Link existingLink = optionalLink.get();
         existingLink.setTitle(link.getTitle());
         existingLink.setUrl(link.getUrl());
 
-        Link updatedLink = linkRepository.save(existingLink);
+        Link updatedLink = linkService.createLink(existingLink);
         return new ResponseEntity<>(
             new LinkAPIResponse(updatedLink, "Link with Id "+linkId+ " was updated successfully"),
             HttpStatus.OK
@@ -115,7 +116,6 @@ public class LinkController {
         HttpStatus.NOT_FOUND
     );
 
-
   }
 
   @DeleteMapping("/{linkId}")
@@ -123,13 +123,14 @@ public class LinkController {
 
     try {
 
-      linkRepository.deleteById(linkId);
+      linkService.deleteLink(linkId);
       return new ResponseEntity<>(
           new LinkAPIResponse("Successfully deleted link with Id " + linkId),
           HttpStatus.OK
       );
 
     } catch (Exception ex) {
+
       return new ResponseEntity<>(
           new LinkAPIResponse(
               "Link with Id " + linkId + " does not exist",
@@ -137,7 +138,9 @@ public class LinkController {
           ),
           HttpStatus.NOT_FOUND
       );
+
     }
+
 
   }
 

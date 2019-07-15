@@ -8,7 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -26,15 +29,29 @@ public class User implements UserDetails {
   @NonNull
   @Email
   @Column(nullable = false, unique = true)
+  @NotEmpty(message = "Email is required.")
   private String email;
 
   @NonNull
   @Column(length = 150)
+  @NotEmpty(message = "Password is required.")
   private String password;
 
   @NonNull
   @Column(nullable = false)
   private boolean enabled;
+
+  @NonNull
+  @NotEmpty(message = "First Name is required.")
+  private String firstName;
+
+  @NonNull
+  @NotEmpty(message = "Last Name is required.")
+  private String lastName;
+
+  @Transient
+  @Setter(AccessLevel.NONE)
+  private String fullName;
 
   @ManyToMany( fetch = FetchType.EAGER)
   @JoinTable(
@@ -69,6 +86,10 @@ public class User implements UserDetails {
   @Override
   public String getUsername() {
     return email;
+  }
+
+  public String getFullName(){
+    return firstName + " " + lastName;
   }
 
   @Override
