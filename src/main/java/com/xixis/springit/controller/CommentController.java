@@ -1,9 +1,7 @@
 package com.xixis.springit.controller;
 
-import com.xixis.springit.domain.CommentListAPIResponse;
-import com.xixis.springit.domain.RoleListAPIResponse;
+import com.xixis.springit.apiresponse.CommentAPIResponse;
 import com.xixis.springit.repository.CommentRepository;
-import com.xixis.springit.repository.RoleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +22,7 @@ public class CommentController {
   @GetMapping(value = "/comments", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> listByLink() {
     return new ResponseEntity<>(
-        new CommentListAPIResponse(commentRepository.findAll(), "All comments listed"),
+        new CommentAPIResponse(commentRepository.findAll(), "All comments listed"),
         HttpStatus.OK
     );
   }
@@ -32,7 +30,7 @@ public class CommentController {
   @GetMapping(value = "/comments/link/{linkId}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> listByLink(@PathVariable Long linkId) {
     return new ResponseEntity<>(
-        new CommentListAPIResponse(commentRepository.findByLinkId(linkId), "All comments for link listed"),
+        new CommentAPIResponse(commentRepository.findByLinkId(linkId), "All comments for link listed"),
         HttpStatus.OK
     );
   }

@@ -1,15 +1,14 @@
 package com.xixis.springit.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.xixis.springit.config.Auditable;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Link extends Auditable {
 
   @Id
@@ -35,9 +35,12 @@ public class Link extends Auditable {
   @URL
   private String url;
 
+  @ManyToOne
+  private User user;
+
   // comment
   @OneToMany(mappedBy = "link")
-  @JsonManagedReference
+  //  @JsonManagedReference
   private List<Comment> comments = new ArrayList<>();
 
   @OneToMany(mappedBy = "link")
@@ -49,7 +52,6 @@ public class Link extends Auditable {
   public void addComment(Comment comment){
     comments.add(comment);
   }
-
 
 
 }

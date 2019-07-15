@@ -1,6 +1,8 @@
-package com.xixis.springit.domain;
+package com.xixis.springit.apiresponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.xixis.springit.apiresponse.APIResponse;
+import com.xixis.springit.domain.Vote;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

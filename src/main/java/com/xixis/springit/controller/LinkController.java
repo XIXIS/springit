@@ -1,9 +1,8 @@
 package com.xixis.springit.controller;
 
 import com.xixis.springit.domain.Link;
-import com.xixis.springit.domain.LinkAPIResponse;
-import com.xixis.springit.repository.LinkRepository;
-import com.xixis.springit.domain.APIResponse;
+import com.xixis.springit.apiresponse.LinkAPIResponse;
+import com.xixis.springit.apiresponse.APIResponse;
 import com.xixis.springit.service.LinkService;
 import com.xixis.springit.validators.LinkValidator;
 import org.springframework.http.HttpStatus;

@@ -1,32 +1,32 @@
 package com.xixis.springit.service;
 
-import com.xixis.springit.domain.*;
+import com.xixis.springit.domain.User;
 import com.xixis.springit.repository.UserRepository;
-import com.xixis.springit.validators.LinkValidator;
-import com.xixis.springit.validators.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
 
   private UserRepository userRepository;
+  private RoleService roleService;
   private final Logger logger = LoggerFactory.getLogger(UserService.class);
+  private final MailService mailService;
 
-  public UserService(UserRepository userRepository){
+  public UserService(UserRepository userRepository, RoleService roleService, MailService mailService){
     this.userRepository = userRepository;
+    this.roleService = roleService;
+    this.mailService = mailService;
   }
 
   @Override
@@ -40,10 +40,32 @@ public class UserService implements UserDetailsService {
 
   }
 
+  public Optional<User> findByEmail(String email) {
+    return userRepository.findByEmail(email);
+
+  }
+
   public User register(User user){
 
+    // encrypt and save password
     user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-    return userRepository.save(user);
+
+    // Add role to user
+    user.addRole(roleService.findByName("ROLE_ADMIN"));
+
+    // Disable user
+    user.setEnabled(false);
+
+    // Set activation code
+    user.setActivationCode(UUID.randomUUID().toString());
+
+    //save user
+    save(user);
+
+    //send activation email
+    sendActivationEmail(user);
+
+    return user;
 
   }
 
@@ -62,4 +84,15 @@ public class UserService implements UserDetailsService {
     }
   }
 
+  public void sendActivationEmail(User user){
+    mailService.sendActivationEmail(user);
+  }
+
+  public void sendWelcomeemail(User user){
+    mailService.sendWelcomeEmail(user);
+  }
+
+  public Optional<User> findByEmailAndActivationCode(String email, String activationCode){
+    return userRepository.findByEmailAndActivationCode(email, activationCode);
+  }
 }

@@ -1,6 +1,8 @@
 package com.xixis.springit.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @NoArgsConstructor
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class User implements UserDetails {
 
   @Id
@@ -53,13 +56,14 @@ public class User implements UserDetails {
   @Setter(AccessLevel.NONE)
   private String fullName;
 
+  private String activationCode;
+
   @ManyToMany( fetch = FetchType.EAGER)
   @JoinTable(
       name = "users_roles",
       joinColumns = @JoinColumn( name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn( name = "role_id", referencedColumnName = "id")
   )
-  @JsonManagedReference
   private Set<Role> roles = new HashSet<>();
 
   public void addRole(Role role){

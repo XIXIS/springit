@@ -1,6 +1,6 @@
 package com.xixis.springit.controller;
 
-import com.xixis.springit.domain.RoleListAPIResponse;
+import com.xixis.springit.apiresponse.RoleListAPIResponse;
 import com.xixis.springit.repository.RoleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

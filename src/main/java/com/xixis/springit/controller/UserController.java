@@ -1,7 +1,7 @@
 package com.xixis.springit.controller;
 
 import com.xixis.springit.domain.User;
-import com.xixis.springit.domain.UserAPIResponse;
+import com.xixis.springit.apiresponse.UserAPIResponse;
 import com.xixis.springit.service.UserService;
 import com.xixis.springit.validators.UserValidator;
 import org.springframework.http.HttpStatus;

@@ -1,5 +1,6 @@
 package com.xixis.springit.controller;
 
+import com.xixis.springit.apiresponse.VoteAPIResponse;
 import com.xixis.springit.domain.*;
 import com.xixis.springit.repository.LinkRepository;
 import com.xixis.springit.repository.UserRepository;
@@ -7,10 +8,8 @@ import com.xixis.springit.repository.VoteRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 

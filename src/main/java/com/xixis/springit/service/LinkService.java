@@ -1,7 +1,9 @@
 package com.xixis.springit.service;
 
 import com.xixis.springit.domain.Link;
+import com.xixis.springit.domain.User;
 import com.xixis.springit.repository.LinkRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,11 @@ import java.util.Optional;
 public class LinkService {
 
   private LinkRepository linkRepository;
+  private UserService userService;
 
-  public LinkService(LinkRepository linkRepository){
+  public LinkService(LinkRepository linkRepository, UserService userService){
     this.linkRepository = linkRepository;
+    this.userService = userService;
   }
 
   public List<Link> findAll(){
@@ -22,6 +26,10 @@ public class LinkService {
 
   public Link createLink(Link link) {
 
+    Optional<User> user = userService.findByEmail(
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail()
+    );
+    user.ifPresent(link::setUser);
     return linkRepository.save(link);
 
   }
